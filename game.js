@@ -129,7 +129,6 @@ class Game {
                 }
                 if (this.weapons.value >= card.value) {
                     this.hand.splice(index, 1);
-                    this.discard.push(card);
                     this.weapons.rank = card.rank;
                     this.weapons.value = card.value;
                     this.absorbedMonster = card;
@@ -143,7 +142,6 @@ class Game {
                         this.weapons.value = card.value;
                         this.weaponTrained = true;
                         this.hand.splice(index, 1);
-                        this.discard.push(card);
                         this.absorbedMonster = card;
                         if (this.hand.length === 1) this.drawCard();
                         this.lastFled = false;
@@ -157,6 +155,10 @@ class Game {
             this.selectedAttack = null; // reset after use
         } else {
             if (card.type === 'weapon') {
+                if (this.weapons) {
+                    this.discard.push(this.weapons);
+                    if (this.absorbedMonster) this.discard.push(this.absorbedMonster);
+                }
                 this.weapons = card;
                 this.weaponTrained = false;
                 this.absorbedMonster = null;
@@ -177,9 +179,13 @@ class Game {
             alert('Cannot flee consecutively!');
             return;
         }
+        if (this.hand.length !== 4) {
+            alert('Can only flee with a full room (4 cards)!');
+            return;
+        }
         // Move all cards in hand to bottom of deck
         while (this.hand.length > 0) {
-            this.deck.push(this.hand.pop());
+            this.deck.unshift(this.hand.pop());
         }
         // Draw 4 new cards
         this.drawCard();
@@ -234,6 +240,12 @@ class Game {
             weaponCard.className = 'card';
             weaponCard.innerHTML = this.weapons.getHTML();
             weaponsDiv.appendChild(weaponCard);
+        } else {
+            const placeholder = document.createElement('div');
+            placeholder.className = 'card';
+            placeholder.style.visibility = 'hidden';
+            placeholder.innerHTML = '&nbsp;';
+            weaponsDiv.appendChild(placeholder);
         }
         if (this.absorbedMonster) {
             const monsterCard = document.createElement('div');
@@ -256,7 +268,7 @@ class Game {
         document.getElementById('attack').classList.toggle('selected', this.selectedAttack === 'weapon');
 
         // Disable flee button if cannot flee
-        document.getElementById('flee').disabled = this.lastFled;
+        document.getElementById('flee').disabled = this.lastFled || this.hand.length !== 4;
     }
 }
 
