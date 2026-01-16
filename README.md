@@ -2,7 +2,7 @@
 
 A strategic web-based dungeon crawler played with a standard deck of cards. Survive the endless depths by managing your health and weapon durability.
 
-# Backglog
+# Backlog
 Make cards bigger
 
 Make equipped weapon area smaller
