@@ -99,12 +99,12 @@ class Game {
             alert('No shield equipped!');
             return;
         }
-        const monsterIndex = this.hand.findIndex(c => c.type === 'monster');
+        const monsterIndex = this.hand.findIndex(c => c && c.type === 'monster');
         if (monsterIndex !== -1) {
             if (this.shield.value >= this.hand[monsterIndex].value) {
-                this.hand.splice(monsterIndex, 1);
+                this.hand[monsterIndex] = null;
                 this.shield = null;
-                if (this.hand.length === 1) this.drawCard();
+                if (this.hand.filter(c => c).length === 1) this.drawCard();
             } else {
                 alert('Shield too weak!');
             }
@@ -116,8 +116,13 @@ class Game {
     }
 
     drawCard() {
-        while (this.hand.length < 4 && this.deck.length > 0) {
-            this.hand.push(this.deck.pop());
+        while (this.hand.length < 4) {
+            this.hand.push(null);
+        }
+        for (let i = 0; i < 4; i++) {
+            if (this.hand[i] === null && this.deck.length > 0) {
+                this.hand[i] = this.deck.pop();
+            }
         }
         this.updateDisplay();
     }
@@ -136,9 +141,9 @@ class Game {
             if (this.selectedAttack === 'quick') {
                 const damage = Math.max(0, card.value - attackBonus);
                 this.health -= damage;
-                this.hand.splice(index, 1);
+                this.hand[index] = null;
                 this.discard.push(card);
-                if (this.hand.length === 1) this.drawCard();
+                if (this.hand.filter(c => c).length === 1) this.drawCard();
                 this.lastFled = false;
                 this.consecutiveFlees = 0;
             } else if (this.selectedAttack === 'shield') {
@@ -148,11 +153,11 @@ class Game {
                 }
                 const effectiveShieldValue = this.shield.value + attackBonus;
                 if (effectiveShieldValue >= card.value) {
-                    this.hand.splice(index, 1);
+                    this.hand[index] = null;
                     this.shield.rank = card.rank;
                     this.shield.value = card.value;
                     this.absorbedMonster = card;
-                    if (this.hand.length === 1) this.drawCard();
+                    if (this.hand.filter(c => c).length === 1) this.drawCard();
                     this.lastFled = false;
                 } else {
                     if (!this.shieldTrained) {
@@ -161,9 +166,9 @@ class Game {
                         this.shield.rank = card.rank;
                         this.shield.value = card.value;
                         this.shieldTrained = true;
-                        this.hand.splice(index, 1);
+                        this.hand[index] = null;
                         this.absorbedMonster = card;
-                        if (this.hand.length === 1) this.drawCard();
+                        if (this.hand.filter(c => c).length === 1) this.drawCard();
                         this.lastFled = false;
                         this.consecutiveFlees = 0;
                     } else {
@@ -182,20 +187,20 @@ class Game {
                 this.shieldTrained = false;
                 this.absorbedMonster = null;
                 this.selectedAttack = 'shield';
-                this.hand.splice(index, 1);
+                this.hand[index] = null;
             } else if (card.type === 'sword') {
                 if (card.rank === 'A') {
                     alert('You found the legendary sword!');
                 }
                 this.sword = card;
-                this.hand.splice(index, 1);
+                this.hand[index] = null;
             } else if (card.type === 'potion') {
                 this.health = Math.min(20, this.health + card.value);
                 this.discard.push(card);
-                this.hand.splice(index, 1);
+                this.hand[index] = null;
             }
             this.lastFled = false;
-            if (this.hand.length === 1) this.drawCard();
+            if (this.hand.filter(c => c).length === 1) this.drawCard();
         }
         this.updateDisplay();
         this.checkGameOver();
@@ -206,13 +211,16 @@ class Game {
             alert('Cannot flee consecutively!');
             return;
         }
-        if (this.hand.length !== 4) {
+        if (this.hand.filter(c => c).length !== 4) {
             alert('Can only flee with a full room (4 cards)!');
             return;
         }
         // Move all cards in hand to bottom of deck
-        while (this.hand.length > 0) {
-            this.deck.unshift(this.hand.pop());
+        for (let i = 0; i < this.hand.length; i++) {
+            if (this.hand[i]) {
+                this.deck.unshift(this.hand[i]);
+                this.hand[i] = null;
+            }
         }
         // Draw 4 new cards
         this.drawCard();
@@ -225,7 +233,7 @@ class Game {
         if (this.health <= 0) {
             alert('Game Over! You died.');
             location.reload();
-        } else if (this.deck.length === 0 && this.hand.filter(c => c.type === 'monster').length === 0) {
+        } else if (this.deck.length === 0 && this.hand.filter(c => c && c.type === 'monster').length === 0) {
             alert('You win!');
             location.reload();
         }
@@ -264,62 +272,100 @@ class Game {
 
         const handDiv = document.getElementById('hand');
         handDiv.innerHTML = '';
+        const handTitle = document.createElement('h4');
+        handTitle.className = 'zone-title';
+        handTitle.textContent = 'Room';
+        handDiv.appendChild(handTitle);
+        const handCardsContainer = document.createElement('div');
+        handCardsContainer.className = 'card-container';
         this.hand.forEach((card, index) => {
             const cardDiv = document.createElement('div');
             cardDiv.className = 'card';
-            cardDiv.innerHTML = card.getHTML();
-            cardDiv.onclick = () => this.playCard(index);
-            handDiv.appendChild(cardDiv);
+            if (card) {
+                cardDiv.innerHTML = card.getHTML();
+                cardDiv.title = card.type.charAt(0).toUpperCase() + card.type.slice(1);
+                cardDiv.onclick = () => this.playCard(index);
+            } else {
+                cardDiv.style.visibility = 'hidden';
+                cardDiv.innerHTML = '&nbsp;';
+            }
+            handCardsContainer.appendChild(cardDiv);
         });
+        handDiv.appendChild(handCardsContainer);
 
         const shieldDiv = document.getElementById('shield');
         shieldDiv.innerHTML = '';
+        const shieldTitle = document.createElement('h4');
+        shieldTitle.className = 'zone-title';
+        shieldTitle.textContent = 'Equipped Shield';
+        shieldDiv.appendChild(shieldTitle);
+        const shieldCardsContainer = document.createElement('div');
+        shieldCardsContainer.className = 'card-container';
         if (this.shield) {
             const shieldCard = document.createElement('div');
             shieldCard.className = 'card';
             shieldCard.innerHTML = this.shield.getHTML();
-            shieldDiv.appendChild(shieldCard);
+            shieldCard.title = this.shield.type.charAt(0).toUpperCase() + this.shield.type.slice(1);
+            shieldCardsContainer.appendChild(shieldCard);
         } else {
             const placeholder = document.createElement('div');
             placeholder.className = 'card';
             placeholder.style.visibility = 'hidden';
             placeholder.innerHTML = '&nbsp;';
-            shieldDiv.appendChild(placeholder);
+            shieldCardsContainer.appendChild(placeholder);
         }
         if (this.absorbedMonster) {
             const monsterCard = document.createElement('div');
             monsterCard.className = 'card';
             monsterCard.innerHTML = this.absorbedMonster.getHTML();
-            shieldDiv.appendChild(monsterCard);
+            monsterCard.title = this.absorbedMonster.type.charAt(0).toUpperCase() + this.absorbedMonster.type.slice(1);
+            shieldCardsContainer.appendChild(monsterCard);
         }
+        shieldDiv.appendChild(shieldCardsContainer);
 
         const swordDiv = document.getElementById('sword');
         swordDiv.innerHTML = '';
+        const swordTitle = document.createElement('h4');
+        swordTitle.className = 'zone-title';
+        swordTitle.textContent = 'Equipped Sword';
+        swordDiv.appendChild(swordTitle);
+        const swordCardsContainer = document.createElement('div');
+        swordCardsContainer.className = 'card-container';
         if (this.sword) {
             const swordCard = document.createElement('div');
             swordCard.className = 'card';
             swordCard.innerHTML = this.sword.getHTML();
-            swordDiv.appendChild(swordCard);
+            swordCard.title = this.sword.type.charAt(0).toUpperCase() + this.sword.type.slice(1);
+            swordCardsContainer.appendChild(swordCard);
         } else {
             // Optional: Placeholder for sword if you want it to take up space
-            swordDiv.innerHTML = '<div class="card" style="visibility:hidden">&nbsp;</div>';
+            swordCardsContainer.innerHTML = '<div class="card" style="visibility:hidden">&nbsp;</div>';
         }
+        swordDiv.appendChild(swordCardsContainer);
 
         const discardDiv = document.getElementById('discard');
         discardDiv.innerHTML = '';
+        const discardTitle = document.createElement('h4');
+        discardTitle.className = 'zone-title';
+        discardTitle.textContent = 'Discard Pile';
+        discardDiv.appendChild(discardTitle);
+        const discardCardsContainer = document.createElement('div');
+        discardCardsContainer.className = 'card-container';
         this.discard.forEach(card => {
             const cardDiv = document.createElement('div');
             cardDiv.className = 'card';
             cardDiv.innerHTML = card.getHTML();
-            discardDiv.appendChild(cardDiv);
+            cardDiv.title = card.type.charAt(0).toUpperCase() + card.type.slice(1);
+            discardCardsContainer.appendChild(cardDiv);
         });
+        discardDiv.appendChild(discardCardsContainer);
 
         // Update button highlights
         document.getElementById('quickAttack').classList.toggle('selected', this.selectedAttack === 'quick');
         document.getElementById('attack').classList.toggle('selected', this.selectedAttack === 'shield');
 
         // Disable flee button if cannot flee
-        document.getElementById('flee').disabled = this.lastFled || this.hand.length !== 4;
+        document.getElementById('flee').disabled = this.lastFled || this.hand.filter(c => c).length !== 4;
     }
 }
 
