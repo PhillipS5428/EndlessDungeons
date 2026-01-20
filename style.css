@@ -211,6 +211,11 @@ button.selected {
         padding: 10px 5px;
     }
 
+    #hand .card-container {
+        flex-wrap: nowrap;
+        width: 100%;
+    }
+
     #hand .card {
         flex: 1 1 0;
         width: auto;
@@ -257,4 +262,30 @@ button.selected {
     color: #fff;
     margin-top: 20px;
     margin-bottom: 10px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+footer a {
+    color: #ccc;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+footer a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+footer p {
+    font-size: 0.9rem;
+    margin: 10px 0 0 0;
+    color: #aaa;
 }
