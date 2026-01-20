@@ -28,14 +28,14 @@ diamonds...
 Open `index.html` in a web browser or serve the directory with a local server (e.g., `python -m http.server`).
 
 
-Complete work
-2026-01-20 Add function when you hover over cards with the mouse it says what they are (monster, shield, sword, potion).
-2026-01-20 Move instructions to the main page and remove the instructions page. Add an intro paragraph.
-2026-01-19 Beautify the look of the page. When on mobile, 'snap' the screen to the game. Fixed weapon eqippping bug.
-2026-01-18 Add a starting equipment: 0 of Diamonds (Basic Sword) with 0 attack bonus.
-2026-01-18 Make the ace of diamonds a sword, which increases all attacks by 1 until the game ends.
-2026-01-18 Implement change: When you select a shield, the attack type automatically changes to attack with shield.
-2026-01-18 Change "weapon" to "shield" in all aspects of the game.
-2026-01-18 Make the ace of spades and ace of clubs strength 14 monsters.
-2026-01-17 Make the page refresh after each death or successful dungeon crawl (to increase total page views).
-2026-01-17 Make the attack type always selected. 
+Complete work </br>
+2026-01-20 Add function when you hover over cards with the mouse it says what they are (monster, shield, sword, potion). </br>
+2026-01-20 Move instructions to the main page and remove the instructions page. Add an intro paragraph.</br>
+2026-01-19 Beautify the look of the page. When on mobile, 'snap' the screen to the game. Fixed weapon eqippping bug.</br>
+2026-01-18 Add a starting equipment: 0 of Diamonds (Basic Sword) with 0 attack bonus.</br>
+2026-01-18 Make the ace of diamonds a sword, which increases all attacks by 1 until the game ends.</br>
+2026-01-18 Implement change: When you select a shield, the attack type automatically changes to attack with shield.</br>
+2026-01-18 Change "weapon" to "shield" in all aspects of the game.</br>
+2026-01-18 Make the ace of spades and ace of clubs strength 14 monsters.</br>
+2026-01-17 Make the page refresh after each death or successful dungeon crawl (to increase total page views).</br>
+2026-01-17 Make the attack type always selected. </br>
