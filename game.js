@@ -287,7 +287,7 @@ class Game {
                 cardDiv.onclick = () => this.playCard(index);
             } else {
                 cardDiv.style.visibility = 'hidden';
-                cardDiv.innerHTML = '&nbsp;';
+                cardDiv.innerHTML = new Card('A', '♠').getHTML();
             }
             handCardsContainer.appendChild(cardDiv);
         });
@@ -301,26 +301,31 @@ class Game {
         shieldDiv.appendChild(shieldTitle);
         const shieldCardsContainer = document.createElement('div');
         shieldCardsContainer.className = 'card-container';
+        
+        // Shield Slot
+        const shieldCard = document.createElement('div');
+        shieldCard.className = 'card';
         if (this.shield) {
-            const shieldCard = document.createElement('div');
-            shieldCard.className = 'card';
             shieldCard.innerHTML = this.shield.getHTML();
             shieldCard.title = this.shield.type.charAt(0).toUpperCase() + this.shield.type.slice(1);
-            shieldCardsContainer.appendChild(shieldCard);
         } else {
-            const placeholder = document.createElement('div');
-            placeholder.className = 'card';
-            placeholder.style.visibility = 'hidden';
-            placeholder.innerHTML = '&nbsp;';
-            shieldCardsContainer.appendChild(placeholder);
+            shieldCard.style.visibility = 'hidden';
+            shieldCard.innerHTML = new Card('A', '♠').getHTML();
         }
+        shieldCardsContainer.appendChild(shieldCard);
+
+        // Monster Slot
+        const monsterCard = document.createElement('div');
+        monsterCard.className = 'card';
         if (this.absorbedMonster) {
-            const monsterCard = document.createElement('div');
-            monsterCard.className = 'card';
             monsterCard.innerHTML = this.absorbedMonster.getHTML();
             monsterCard.title = this.absorbedMonster.type.charAt(0).toUpperCase() + this.absorbedMonster.type.slice(1);
-            shieldCardsContainer.appendChild(monsterCard);
+        } else {
+            monsterCard.style.visibility = 'hidden';
+            monsterCard.innerHTML = new Card('A', '♠').getHTML();
         }
+        shieldCardsContainer.appendChild(monsterCard);
+        
         shieldDiv.appendChild(shieldCardsContainer);
 
         const swordDiv = document.getElementById('sword');
@@ -331,16 +336,18 @@ class Game {
         swordDiv.appendChild(swordTitle);
         const swordCardsContainer = document.createElement('div');
         swordCardsContainer.className = 'card-container';
+        
+        const swordCard = document.createElement('div');
+        swordCard.className = 'card';
         if (this.sword) {
-            const swordCard = document.createElement('div');
-            swordCard.className = 'card';
             swordCard.innerHTML = this.sword.getHTML();
             swordCard.title = this.sword.type.charAt(0).toUpperCase() + this.sword.type.slice(1);
-            swordCardsContainer.appendChild(swordCard);
         } else {
-            // Optional: Placeholder for sword if you want it to take up space
-            swordCardsContainer.innerHTML = '<div class="card" style="visibility:hidden">&nbsp;</div>';
+            swordCard.style.visibility = 'hidden';
+            swordCard.innerHTML = new Card('A', '♠').getHTML();
         }
+        swordCardsContainer.appendChild(swordCard);
+        
         swordDiv.appendChild(swordCardsContainer);
 
         const discardDiv = document.getElementById('discard');

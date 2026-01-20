@@ -211,6 +211,11 @@ button.selected {
         padding: 10px 5px;
     }
 
+    #hand .card-container {
+        flex-wrap: nowrap;
+        width: 100%;
+    }
+
     #hand .card {
         flex: 1 1 0;
         width: auto;
