@@ -24,6 +24,7 @@ Add a final score mechanism? User can go for a high score and share.
 # Running the Game
 
 Open `index.html` in a web browser or serve the directory with a local server (e.g., `python -m http.server`).
+http://localhost:8000
 
 # Completed work
 2026-01-20 Add function when you hover over cards with the mouse it says what they are (monster, shield, sword, potion).
