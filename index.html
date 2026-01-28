@@ -30,6 +30,16 @@
         .equipment-slot {
             text-align: center;
         }
+        .deck-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        #newGame {
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body>
@@ -43,7 +53,11 @@
         <div id="game">
             <div class="stats-bar">
                 <div id="health">Health: 20</div>
-                <div id="deck">Deck: 52 cards</div>
+                <div id="highScore">High Score: 0</div>
+                <div class="deck-container">
+                    <div id="deck">Deck: 52 cards</div>
+                    <button id="newGame">New Game</button>
+                </div>
             </div>
             <div id="hand"></div>
             <div class="equipment-area">

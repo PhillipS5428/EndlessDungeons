@@ -43,6 +43,16 @@ const GAME_PLAY_TEXT = [
         `
     },
     {
+        title: "Final Score Calculation",
+        html: `
+            <ul>
+                <li>Health remaining at the end of the game</li>
+                <li>Plus any unused health potion points</li>
+                <p>Any potion used with full health of 20 does not increase health, but does get counted in the final score.</p>
+                <p>For example: If you have 18 health and you get a 10 health potion, your health goes up to the maximum of 20 and the remaining health points (8) from the potion are added to your final score.</p>
+            </ul>`
+    },
+    {
         title: "Examples",
         html: `
             <ul>
@@ -112,6 +122,8 @@ class Game {
         this.shieldTrained = false;
         this.absorbedMonster = null;
         this.lastFled = false;
+        this.unusedPotions = 0;
+        this.loadHighScore();
         this.updateDisplay();
         this.drawCard();
         this.snapToGame();
@@ -248,7 +260,12 @@ class Game {
                 this.sword = card;
                 this.hand[index] = null;
             } else if (card.type === 'potion') {
+                const healthBefore = this.health;
                 this.health = Math.min(20, this.health + card.value);
+                // Track unused potions if health doesn't increase
+                if (healthBefore === 20) {
+                    this.unusedPotions += card.value;
+                }
                 this.discard.push(card);
                 this.hand[index] = null;
             }
@@ -284,11 +301,36 @@ class Game {
 
     checkGameOver() {
         if (this.health <= 0) {
-            alert('Game Over! You died.');
+            const score = this.calculateScore();
+            alert(`Game Over! You died.\n\nFinal Score: ${score}\nHigh Score: ${this.highScore}`);
+            this.saveHighScore();
             location.reload();
         } else if (this.deck.length === 0 && this.hand.filter(c => c && c.type === 'monster').length === 0) {
-            alert('You win!');
+            const score = this.calculateScore();
+            const isNewHighScore = score > this.highScore;
+            const message = isNewHighScore 
+                ? `You win! New High Score!\n\nFinal Score: ${score}` 
+                : `You win!\n\nFinal Score: ${score}\nHigh Score: ${this.highScore}`;
+            alert(message);
+            this.saveHighScore();
             location.reload();
+        }
+    }
+
+    calculateScore() {
+        const healthRemaining = Math.max(0, this.health);
+        return healthRemaining + this.unusedPotions;
+    }
+
+    loadHighScore() {
+        this.highScore = parseInt(localStorage.getItem('endlessDungeonsHighScore')) || 0;
+    }
+
+    saveHighScore() {
+        const currentScore = this.calculateScore();
+        if (currentScore > this.highScore) {
+            this.highScore = currentScore;
+            localStorage.setItem('endlessDungeonsHighScore', this.highScore.toString());
         }
     }
 
@@ -304,6 +346,7 @@ class Game {
         this.shieldTrained = false;
         this.absorbedMonster = null;
         this.lastFled = false;
+        this.unusedPotions = 0;
         this.updateDisplay();
         this.drawCard();
     }
@@ -321,6 +364,7 @@ class Game {
 
     updateDisplay() {
         document.getElementById('health').textContent = `Health: ${this.health}`;
+        document.getElementById('highScore').textContent = `High Score: ${this.highScore}`;
         document.getElementById('deck').textContent = `Deck: ${this.deck.length} cards`;
 
         const handDiv = document.getElementById('hand');
@@ -442,3 +486,4 @@ if (instructionsElement) {
 document.getElementById('quickAttack').onclick = () => game.selectQuickAttack();
 document.getElementById('attack').onclick = () => game.selectShieldAttack();
 document.getElementById('flee').onclick = () => game.flee();
+document.getElementById('newGame').onclick = () => game.reset();
