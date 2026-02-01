@@ -1,10 +1,14 @@
 # Endless Dungeons
-
 A strategic web-based dungeon crawler played with a standard deck of cards. Survive the endless depths by managing your health and weapon durability.
 
 Complete a merge into main to auto-deploy changes in Netlify. 
 
 # Backlog
+
+## Needs
+
+
+## Wants
 Clarify the game instrcutions and add examples. The shield mechanic can be hard to grasp for new users. 
 
 Add a game over screen.
@@ -15,22 +19,17 @@ Remove dialog boxes. Do this after a game over screen and a victory screen exist
 
 Add game difficulty. Easy, medium, hard, un-escapable?
 
-Change health to have a symbol (hearts)?
+Change health to have a symbol (hearts) and health bar.
 
-Add spaces for google ads?
-
-Add a final score mechanism? User can go for a high score and share.
-
-Think of something to do with the face cards for hearts and diamonds.
-Hearts increase max health by 1.
-diamonds...
-
-## Running the Game
+# Running the Game
 
 Open `index.html` in a web browser or serve the directory with a local server (e.g., `python -m http.server`).
+http://localhost:8000
 
-
-Complete work
+# Completed work
+Add a final score mechanism.
+Enable a button for users to start a new game without having to resfresh the page.
+Clarify the game instructions and add examples. The shield mechanic can be hard to grasp for new users.
 2026-01-20 Add function when you hover over cards with the mouse it says what they are (monster, shield, sword, potion).
 
 2026-01-20 Move instructions to the main page and remove the instructions page. Add an intro paragraph.
