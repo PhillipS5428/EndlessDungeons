@@ -1,7 +1,20 @@
 # Endless Dungeons
 A strategic web-based dungeon crawler played with a standard deck of cards. Survive the endless depths by managing your health and weapon durability.
 
-Complete a merge into main to auto-deploy changes in Netlify. 
+Complete a merge into main to auto-deploy changes in Netlify.
+
+**To-Do Checklist (AdSense remediation & site improvements)**
+
+- **Audit:** Review pages for low-value or placeholder content (`index.html`, `about.html`, `contact.html`, and pages that primarily serve navigation or UI).
+- **Remove placeholders:** Remove any "under construction" or "coming soon" notices and placeholder banners across the site.
+- **Add substantial content:** Add original content to primary pages: a clear game description, `How to play` instructions, screenshots/gifs, FAQ, and a short blog or updates feed.
+- **Avoid low-value pages:** Do not publish pages whose main purpose is navigation, alerts, or single-button redirects; merge or expand them into contentful pages.
+- **Ad placement rules:** Place ads inside primary content areas (articles or between paragraphs). Avoid placing ads in navigation bars, headers/footers, popups, or alert-only pages.
+- **Accessibility & access:** Ensure pages are publicly reachable (no login required), not blocked by `robots.txt` or meta `noindex`, and are mobile-friendly and fast-loading.
+- **Policy & legal:** Keep `privacy.html` and `terms.html` accurate and visible; maintain `contact.html` with a clear contact method.
+- **Technical hygiene:** Add `sitemap.xml`, a permissive `robots.txt`, verify the site in Google Search Console, and ensure pages are crawlable.
+- **Request review:** After making the fixes, sign into AdSense → Policy center to clear issues and request a site re-review.
+
 
 # Backlog
 
