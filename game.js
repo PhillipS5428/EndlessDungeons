@@ -501,4 +501,5 @@ document.getElementById('quickAttack').onclick = () => game.selectQuickAttack();
 document.getElementById('attack').onclick = () => game.selectShieldAttack();
 document.getElementById('flee').onclick = () => game.flee();
 document.getElementById('newGame').onclick = () => game.reset();
-document.getElementById('endgameNewGame').onclick = () => game.reset();
+const playAgainBtn = document.getElementById('playAgain');
+if (playAgainBtn) playAgainBtn.addEventListener('click', () => game.reset());
