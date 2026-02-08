@@ -322,26 +322,28 @@ footer p {
 /* Endgame Screen */
 .endgame-screen {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     background-color: rgba(0, 0, 0, 0.9);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 9999;
+    padding: env(safe-area-inset-top, 16px) env(safe-area-inset-right, 16px) env(safe-area-inset-bottom, 16px) env(safe-area-inset-left, 16px);
 }
 
 .endgame-content {
-    background-color: rgba(20, 20, 20, 0.95);
+    background-color: rgba(20, 20, 20, 0.98);
     border: 2px solid #d4af37;
     border-radius: 16px;
     padding: 40px 30px;
     max-width: 500px;
     width: 90%;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
     text-align: center;
+    box-sizing: border-box;
 }
 
 .endgame-content h2 {
