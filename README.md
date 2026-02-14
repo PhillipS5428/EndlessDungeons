@@ -22,11 +22,7 @@ Complete a merge into main to auto-deploy changes in Netlify.
 
 
 ## Wants
-Add a game over screen.
-
-Add a victory screen.
-
-Remove dialog boxes. Do this after a game over screen and a victory screen exist. 
+Remove dialog boxes. Replace alerts with in-game notifications or modal dialogs.
 
 Add game difficulty. Easy, medium, hard, un-escapable?
 
@@ -38,6 +34,7 @@ Open `index.html` in a web browser or serve the directory with a local server (e
 http://localhost:8000
 
 # Completed work
+2026-02-14 Add a game over screen and victory screen with score display and play again button.
 Add a final score mechanism.
 Enable a button for users to start a new game without having to resfresh the page.
 Clarify the game instructions and add examples. The shield mechanic can be hard to grasp for new users.
