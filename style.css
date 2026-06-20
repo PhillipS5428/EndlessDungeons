@@ -302,6 +302,46 @@ button.selected {
     margin-top: 0;
 }
 
+.instructions-container details summary {
+    cursor: pointer;
+    list-style: none;
+    outline: none;
+}
+
+.summary-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.summary-content h2 {
+    margin: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.instructions-container details summary::-webkit-details-marker {
+    display: none;
+}
+
+.expand-button {
+    background-color: #d4af37;
+    color: black;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: inline-block;
+}
+
+.expand-button:hover {
+    background-color: #f1c40f;
+}
+
 .instructions-container h3 {
     color: #fff;
     margin-top: 20px;
