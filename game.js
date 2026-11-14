@@ -215,6 +215,7 @@ class Game {
                     this.hand[index] = null;
                     this.shield.rank = card.rank;
                     this.shield.value = card.value;
+                    this.shieldTrained = true;
                     this.absorbedMonster = card;
                     if (this.hand.filter(c => c).length === 1) this.drawCard();
                     this.lastFled = false;
