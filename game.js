@@ -391,9 +391,9 @@ class Game {
     }
 
     updateDisplay() {
-        document.getElementById('health').textContent = `Health: ${this.health}`;
-        document.getElementById('highScore').textContent = `High Score: ${this.highScore}`;
-        document.getElementById('deck').textContent = `Deck: ${this.deck.length} cards`;
+        document.getElementById('health').textContent = this.health;
+        document.getElementById('highScore').textContent = this.highScore;
+        document.getElementById('deck').textContent = this.deck.length;
 
         const handDiv = document.getElementById('hand');
         handDiv.innerHTML = '';
@@ -418,16 +418,11 @@ class Game {
         });
         handDiv.appendChild(handCardsContainer);
 
-        const shieldDiv = document.getElementById('shield');
-        shieldDiv.innerHTML = '';
-        const shieldTitle = document.createElement('h4');
-        shieldTitle.className = 'zone-title';
-        shieldTitle.textContent = 'Equipped Shield';
-        shieldDiv.appendChild(shieldTitle);
+        const shieldDisplay = document.getElementById('shield');
+        shieldDisplay.innerHTML = '';
         const shieldCardsContainer = document.createElement('div');
         shieldCardsContainer.className = 'card-container';
         
-        // Shield Slot
         const shieldCard = document.createElement('div');
         shieldCard.className = 'card';
         if (this.shield) {
@@ -439,7 +434,6 @@ class Game {
         }
         shieldCardsContainer.appendChild(shieldCard);
 
-        // Monster Slot
         const monsterCard = document.createElement('div');
         monsterCard.className = 'card';
         if (this.absorbedMonster) {
@@ -451,14 +445,10 @@ class Game {
         }
         shieldCardsContainer.appendChild(monsterCard);
         
-        shieldDiv.appendChild(shieldCardsContainer);
+        shieldDisplay.appendChild(shieldCardsContainer);
 
-        const swordDiv = document.getElementById('sword');
-        swordDiv.innerHTML = '';
-        const swordTitle = document.createElement('h4');
-        swordTitle.className = 'zone-title';
-        swordTitle.textContent = 'Equipped Sword';
-        swordDiv.appendChild(swordTitle);
+        const swordDisplay = document.getElementById('sword');
+        swordDisplay.innerHTML = '';
         const swordCardsContainer = document.createElement('div');
         swordCardsContainer.className = 'card-container';
         
@@ -473,7 +463,7 @@ class Game {
         }
         swordCardsContainer.appendChild(swordCard);
         
-        swordDiv.appendChild(swordCardsContainer);
+        swordDisplay.appendChild(swordCardsContainer);
 
         const discardDiv = document.getElementById('discard');
         discardDiv.innerHTML = '';
@@ -492,11 +482,9 @@ class Game {
         });
         discardDiv.appendChild(discardCardsContainer);
 
-        // Update button highlights
         document.getElementById('quickAttack').classList.toggle('selected', this.selectedAttack === 'quick');
         document.getElementById('attack').classList.toggle('selected', this.selectedAttack === 'shield');
 
-        // Disable flee button if cannot flee
         document.getElementById('flee').disabled = this.lastFled || this.hand.filter(c => c).length !== 4;
     }
 }
@@ -517,3 +505,12 @@ document.getElementById('flee').onclick = () => game.flee();
 document.getElementById('newGame').onclick = () => game.reset();
 const playAgainBtn = document.getElementById('playAgain');
 if (playAgainBtn) playAgainBtn.addEventListener('click', () => game.reset());
+
+// Fullscreen functionality
+const fullscreenBtn = document.getElementById('fullscreenBtn');
+if (fullscreenBtn) {
+    fullscreenBtn.onclick = () => {
+        document.body.classList.toggle('fullscreen');
+        fullscreenBtn.textContent = document.body.classList.contains('fullscreen') ? '⛶ Exit Fullscreen' : '⛶ Fullscreen';
+    };
+}
