@@ -432,7 +432,8 @@ class Game {
         const shieldStatDisplay = document.getElementById('shieldStat');
         if (shieldStatDisplay) {
             if (this.shield) {
-                shieldStatDisplay.textContent = this.shield.value.toString();
+                const emoji = !this.shieldTrained ? ' ✨' : '';
+                shieldStatDisplay.textContent = this.shield.value.toString() + emoji;
             } else {
                 shieldStatDisplay.textContent = '—';
             }
