@@ -37,7 +37,7 @@
             gap: 10px;
         }
         #newGame {
-            padding: 5px 10px;
+            padding: 8px 14px;
             font-size: 0.9rem;
             white-space: nowrap;
         }
@@ -95,36 +95,38 @@
             <!-- <p>Endless Dungeons is a passion project built on a love for strategic card games. If you enjoy playing and would like to support its ongoing development, please consider visiting my <a href="https://patreon.com/PhillipS396?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_creator&utm_content=copyLink" target="_blank">Patreon page</a>. Your support means the world to me!</p> -->
         </div>
         <div id="game">
-            <div class="stats-box">
-                <div class="stats-row">
+            <div class="game-header">
+                <div class="top-left-stats">
                     <div class="stat-item">
                         <span class="stat-label">Health</span>
                         <span class="stat-value" id="health">20</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">High Score</span>
-                        <span class="stat-value" id="highScore">0</span>
                     </div>
                     <div class="stat-item">
                         <span class="stat-label">Deck</span>
                         <span class="stat-value" id="deck">52</span>
                     </div>
                 </div>
-                <div class="stats-row equipment-row">
+                <div class="top-right-stats">
                     <div class="stat-item">
-                        <span class="stat-label">⚔ Sword</span>
-                        <div id="sword" class="equipment-display"></div>
+                        <span class="stat-label">High Score</span>
+                        <span class="stat-value" id="highScore">0</span>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-label">🛡 Shield</span>
-                        <div id="shield" class="equipment-display"></div>
-                    </div>
-                </div>
-                <div class="stats-row button-row">
                     <button id="newGame">New Game</button>
-                    <button id="fullscreenBtn" title="Toggle Fullscreen">⛶ Fullscreen</button>
+                    <button id="fullscreenBtn" title="Toggle Fullscreen">â›¶ Fullscreen</button>
                 </div>
             </div>
+
+            <div class="equipment-section">
+                <div class="stat-item">
+                    <span class="stat-label">âš” Sword</span>
+                    <div id="sword" class="equipment-display"></div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">ðŸ›¡ Shield</span>
+                    <div id="shield" class="equipment-display"></div>
+                </div>
+            </div>
+
             <div id="hand"></div>
             <div class="action-buttons">
                 <button id="quickAttack">Quick Attack</button>
@@ -158,7 +160,7 @@
             </div>
         </div>
         <div class="support-section" style="text-align: center; margin-top: 30px; padding: 20px; background-color: rgba(212, 175, 55, 0.1); border: 1px solid #d4af37; border-radius: 12px;">
-            <p style="color: #f0f0f0; font-size: 1.1rem; margin-bottom: 20px;">Endless Dungeons is a labor of love, and we want to keep it that way—no ads, no tracking. Your support helps us cover server costs and keep the cards coming, endlessly!</p>
+            <p style="color: #f0f0f0; font-size: 1.1rem; margin-bottom: 20px;">Endless Dungeons is a labor of love, and we want to keep it that wayâ€”no ads, no tracking. Your support helps us cover server costs and keep the cards coming, endlessly!</p>
             <a href="https://buy.stripe.com/7sY7sKdxBdzc2bL51Y83C01" target="_blank" style="display: inline-block; background-color: #d4af37; color: black; padding: 12px 24px; text-decoration: none; font-weight: bold; border-radius: 8px; font-size: 1.1rem;">Buy us a coffee</a>
         </div>
     </main>
