@@ -418,52 +418,25 @@ class Game {
         });
         handDiv.appendChild(handCardsContainer);
 
-        const shieldDisplay = document.getElementById('shield');
-        shieldDisplay.innerHTML = '';
-        const shieldCardsContainer = document.createElement('div');
-        shieldCardsContainer.className = 'card-container';
-        
-        const shieldCard = document.createElement('div');
-        shieldCard.className = 'card';
-        if (this.shield) {
-            shieldCard.innerHTML = this.shield.getHTML();
-            shieldCard.title = this.shield.type.charAt(0).toUpperCase() + this.shield.type.slice(1);
-        } else {
-            shieldCard.style.visibility = 'hidden';
-            shieldCard.innerHTML = new Card('A', '♠').getHTML();
+        // Update sword stat (0 for regular sword, +1 for legendary sword)
+        const swordStatDisplay = document.getElementById('swordStat');
+        if (swordStatDisplay) {
+            if (this.sword && this.sword.value === 1) {
+                swordStatDisplay.textContent = '+1';
+            } else {
+                swordStatDisplay.textContent = '0';
+            }
         }
-        shieldCardsContainer.appendChild(shieldCard);
 
-        const monsterCard = document.createElement('div');
-        monsterCard.className = 'card';
-        if (this.absorbedMonster) {
-            monsterCard.innerHTML = this.absorbedMonster.getHTML();
-            monsterCard.title = this.absorbedMonster.type.charAt(0).toUpperCase() + this.absorbedMonster.type.slice(1);
-        } else {
-            monsterCard.style.visibility = 'hidden';
-            monsterCard.innerHTML = new Card('A', '♠').getHTML();
+        // Update shield stat (show strength or dash if no shield)
+        const shieldStatDisplay = document.getElementById('shieldStat');
+        if (shieldStatDisplay) {
+            if (this.shield) {
+                shieldStatDisplay.textContent = this.shield.value.toString();
+            } else {
+                shieldStatDisplay.textContent = '—';
+            }
         }
-        shieldCardsContainer.appendChild(monsterCard);
-        
-        shieldDisplay.appendChild(shieldCardsContainer);
-
-        const swordDisplay = document.getElementById('sword');
-        swordDisplay.innerHTML = '';
-        const swordCardsContainer = document.createElement('div');
-        swordCardsContainer.className = 'card-container';
-        
-        const swordCard = document.createElement('div');
-        swordCard.className = 'card';
-        if (this.sword) {
-            swordCard.innerHTML = this.sword.getHTML();
-            swordCard.title = this.sword.type.charAt(0).toUpperCase() + this.sword.type.slice(1);
-        } else {
-            swordCard.style.visibility = 'hidden';
-            swordCard.innerHTML = new Card('A', '♠').getHTML();
-        }
-        swordCardsContainer.appendChild(swordCard);
-        
-        swordDisplay.appendChild(swordCardsContainer);
 
         const discardDiv = document.getElementById('discard');
         discardDiv.innerHTML = '';

@@ -214,13 +214,6 @@ ul {
     border-color: #d4af37;
 }
 
-.equipment-section {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin-bottom: 20px;
-}
-
 .stats-row {
     display: flex;
     gap: 20px;
@@ -455,11 +448,6 @@ button.selected {
         width: 100%;
         flex-direction: column;
         align-items: center;
-    }
-
-    .equipment-section {
-        flex-direction: column;
-        gap: 15px;
     }
 }
 
