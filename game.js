@@ -215,6 +215,7 @@ class Game {
                     this.hand[index] = null;
                     this.shield.rank = card.rank;
                     this.shield.value = card.value;
+                    this.shieldTrained = true;
                     this.absorbedMonster = card;
                     if (this.hand.filter(c => c).length === 1) this.drawCard();
                     this.lastFled = false;
@@ -391,9 +392,9 @@ class Game {
     }
 
     updateDisplay() {
-        document.getElementById('health').textContent = `Health: ${this.health}`;
-        document.getElementById('highScore').textContent = `High Score: ${this.highScore}`;
-        document.getElementById('deck').textContent = `Deck: ${this.deck.length} cards`;
+        document.getElementById('health').textContent = this.health;
+        document.getElementById('highScore').textContent = this.highScore;
+        document.getElementById('deck').textContent = this.deck.length;
 
         const handDiv = document.getElementById('hand');
         handDiv.innerHTML = '';
@@ -418,62 +419,26 @@ class Game {
         });
         handDiv.appendChild(handCardsContainer);
 
-        const shieldDiv = document.getElementById('shield');
-        shieldDiv.innerHTML = '';
-        const shieldTitle = document.createElement('h4');
-        shieldTitle.className = 'zone-title';
-        shieldTitle.textContent = 'Equipped Shield';
-        shieldDiv.appendChild(shieldTitle);
-        const shieldCardsContainer = document.createElement('div');
-        shieldCardsContainer.className = 'card-container';
-        
-        // Shield Slot
-        const shieldCard = document.createElement('div');
-        shieldCard.className = 'card';
-        if (this.shield) {
-            shieldCard.innerHTML = this.shield.getHTML();
-            shieldCard.title = this.shield.type.charAt(0).toUpperCase() + this.shield.type.slice(1);
-        } else {
-            shieldCard.style.visibility = 'hidden';
-            shieldCard.innerHTML = new Card('A', '♠').getHTML();
+        // Update sword stat (0 for regular sword, +1 for legendary sword)
+        const swordStatDisplay = document.getElementById('swordStat');
+        if (swordStatDisplay) {
+            if (this.sword && this.sword.value === 1) {
+                swordStatDisplay.textContent = '+1';
+            } else {
+                swordStatDisplay.textContent = '0';
+            }
         }
-        shieldCardsContainer.appendChild(shieldCard);
 
-        // Monster Slot
-        const monsterCard = document.createElement('div');
-        monsterCard.className = 'card';
-        if (this.absorbedMonster) {
-            monsterCard.innerHTML = this.absorbedMonster.getHTML();
-            monsterCard.title = this.absorbedMonster.type.charAt(0).toUpperCase() + this.absorbedMonster.type.slice(1);
-        } else {
-            monsterCard.style.visibility = 'hidden';
-            monsterCard.innerHTML = new Card('A', '♠').getHTML();
+        // Update shield stat (show strength or dash if no shield)
+        const shieldStatDisplay = document.getElementById('shieldStat');
+        if (shieldStatDisplay) {
+            if (this.shield) {
+                const emoji = !this.shieldTrained ? ' ✨' : '';
+                shieldStatDisplay.textContent = this.shield.value.toString() + emoji;
+            } else {
+                shieldStatDisplay.textContent = '—';
+            }
         }
-        shieldCardsContainer.appendChild(monsterCard);
-        
-        shieldDiv.appendChild(shieldCardsContainer);
-
-        const swordDiv = document.getElementById('sword');
-        swordDiv.innerHTML = '';
-        const swordTitle = document.createElement('h4');
-        swordTitle.className = 'zone-title';
-        swordTitle.textContent = 'Equipped Sword';
-        swordDiv.appendChild(swordTitle);
-        const swordCardsContainer = document.createElement('div');
-        swordCardsContainer.className = 'card-container';
-        
-        const swordCard = document.createElement('div');
-        swordCard.className = 'card';
-        if (this.sword) {
-            swordCard.innerHTML = this.sword.getHTML();
-            swordCard.title = this.sword.type.charAt(0).toUpperCase() + this.sword.type.slice(1);
-        } else {
-            swordCard.style.visibility = 'hidden';
-            swordCard.innerHTML = new Card('A', '♠').getHTML();
-        }
-        swordCardsContainer.appendChild(swordCard);
-        
-        swordDiv.appendChild(swordCardsContainer);
 
         const discardDiv = document.getElementById('discard');
         discardDiv.innerHTML = '';
@@ -492,11 +457,9 @@ class Game {
         });
         discardDiv.appendChild(discardCardsContainer);
 
-        // Update button highlights
         document.getElementById('quickAttack').classList.toggle('selected', this.selectedAttack === 'quick');
         document.getElementById('attack').classList.toggle('selected', this.selectedAttack === 'shield');
 
-        // Disable flee button if cannot flee
         document.getElementById('flee').disabled = this.lastFled || this.hand.filter(c => c).length !== 4;
     }
 }
@@ -517,3 +480,12 @@ document.getElementById('flee').onclick = () => game.flee();
 document.getElementById('newGame').onclick = () => game.reset();
 const playAgainBtn = document.getElementById('playAgain');
 if (playAgainBtn) playAgainBtn.addEventListener('click', () => game.reset());
+
+// Fullscreen functionality
+const fullscreenBtn = document.getElementById('fullscreenBtn');
+if (fullscreenBtn) {
+    fullscreenBtn.onclick = () => {
+        document.body.classList.toggle('fullscreen');
+        fullscreenBtn.textContent = document.body.classList.contains('fullscreen') ? '⛶ Exit Fullscreen' : '⛶ Fullscreen';
+    };
+}
